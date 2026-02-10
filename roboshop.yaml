@@ -27,3 +27,15 @@
     - name: print the output
       ansible.builtin.debug:
         msg: "{{ ec2_output }}"
+
+    - name: create r53 records
+      amazon.aws.route53:
+       state: present
+       Zone: "{ domain_name }}"
+       record: "roboshop-{{ env }}.{{ domain_name }}" # roboshop-dev.daws88s.online
+       type: A
+       ttl: 1
+       value: "{{ item.instances[0].public_ip_address }}"
+       wait: true
+      value: "{{ item.instances[0].public_ip_address }}"
+       
