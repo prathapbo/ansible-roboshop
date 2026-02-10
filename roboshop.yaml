@@ -5,6 +5,7 @@
     sg_id: sg-04912852a99136d2b
     ami_id: ami-0220d79f3f480ecf5
     env: dev
+    domain_name: daws88s.online
     instances:
       - mongodb
       - catalogue
@@ -30,12 +31,11 @@
 
     - name: create r53 records
       amazon.aws.route53:
-       state: present
-       Zone: "{ domain_name }}"
-       record: "roboshop-{{ env }}.{{ domain_name }}" # roboshop-dev.daws88s.online
-       type: A
-       ttl: 1
-       value: "{{ item.instances[0].public_ip_address }}"
-       wait: true
-      value: "{{ item.instances[0].public_ip_address }}"
-       
+        state: present
+        zone: "{{ domain_name }}"
+        record: "{{ item.item }}-{{ env }}.{{ domain_name }}"  # e.g., mongodb-dev.daws88s.online
+        type: A
+        ttl: 300
+        value: "{{ item.instances[0].public_ip_address }}"
+        wait: true
+      loop: "{{ ec2_output.results }}"
