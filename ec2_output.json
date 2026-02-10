@@ -1,10 +1,10 @@
- {
- "changed": true,
+changed": false,
         "msg": "All items completed",
         "results": [
             {
                 "ansible_loop_var": "item",
-                "changed": true,
+                "changed": false,
+                "changes": [],
                 "failed": false,
                 "instance_ids": [
                     "i-07de81793cc152aa3"
@@ -20,7 +20,7 @@
                                     "attach_time": "2026-02-10T11:48:08+00:00",
                                     "delete_on_termination": true,
                                     "ebs_card_index": 0,
-                                    "status": "attaching",
+                                    "status": "attached",
                                     "volume_id": "vol-07caf8b6754e3deb1"
                                 }
                             }
@@ -58,7 +58,7 @@
                             "http_put_response_hop_limit": 1,
                             "http_tokens": "optional",
                             "instance_metadata_tags": "disabled",
-                            "state": "pending"
+                            "state": "applied"
                         },
                         "monitoring": {
                             "state": "disabled"
@@ -76,7 +76,7 @@
                                     "delete_on_termination": true,
                                     "device_index": 0,
                                     "network_card_index": 0,
-                                    "status": "attaching"
+                                    "status": "attached"
                                 },
                                 "description": "",
                                 "groups": [
@@ -146,8 +146,8 @@
                         ],
                         "source_dest_check": true,
                         "state": {
-                            "code": 0,
-                            "name": "pending"
+                            "code": 16,
+                            "name": "running"
                         },
                         "state_transition_reason": "",
                         "subnet_id": "subnet-0350decbd8e2ad52b",
@@ -230,72 +230,12 @@
                         "wait_timeout": 600
                     }
                 },
-                "item": "mongodb",
-                "spec": {
-                    "BlockDeviceMappings": [],
-                    "ClientToken": "71ae69c27f024c6dbd43f4c52b637ef6",
-                    "ImageId": "ami-0220d79f3f480ecf5",
-                    "InstanceType": "t3.micro",
-                    "MaxCount": 1,
-                    "MinCount": 1,
-                    "NetworkInterfaces": [
-                        {
-                            "DeviceIndex": 0,
-                            "Groups": [
-                                "sg-04912852a99136d2b"
-                            ],
-                            "SubnetId": "subnet-0350decbd8e2ad52b"
-                        }
-                    ],
-                    "TagSpecifications": [
-                        {
-                            "ResourceType": "volume",
-                            "Tags": [
-                                {
-                                    "Key": "Project",
-                                    "Value": "roboshop"
-                                },
-                                {
-                                    "Key": "Component",
-                                    "Value": "mongodb"
-                                },
-                                {
-                                    "Key": "Environment",
-                                    "Value": "dev"
-                                },
-                                {
-                                    "Key": "Name",
-                                    "Value": "mongodb-dev"
-                                }
-                            ]
-                        },
-                        {
-                            "ResourceType": "instance",
-                            "Tags": [
-                                {
-                                    "Key": "Project",
-                                    "Value": "roboshop"
-                                },
-                                {
-                                    "Key": "Component",
-                                    "Value": "mongodb"
-                                },
-                                {
-                                    "Key": "Environment",
-                                    "Value": "dev"
-                                },
-                                {
-                                    "Key": "Name",
-                                    "Value": "mongodb-dev"
-                                }
-                            ]
-                        }
-                    ]
-                }
+                "item": "mongodb"
             },
             {
                 "ansible_loop_var": "item",
-                "changed": true,
+                "changed": false,
+                "changes": [],
                 "failed": false,
                 "instance_ids": [
                     "i-0db3216e123d79999"
@@ -311,7 +251,7 @@
                                     "attach_time": "2026-02-10T11:48:13+00:00",
                                     "delete_on_termination": true,
                                     "ebs_card_index": 0,
-                                    "status": "attaching",
+                                    "status": "attached",
                                     "volume_id": "vol-0644fa6e220c621be"
                                 }
                             }
@@ -349,7 +289,7 @@
                             "http_put_response_hop_limit": 1,
                             "http_tokens": "optional",
                             "instance_metadata_tags": "disabled",
-                            "state": "pending"
+                            "state": "applied"
                         },
                         "monitoring": {
                             "state": "disabled"
@@ -367,7 +307,7 @@
                                     "delete_on_termination": true,
                                     "device_index": 0,
                                     "network_card_index": 0,
-                                    "status": "attaching"
+                                    "status": "attached"
                                 },
                                 "description": "",
                                 "groups": [
@@ -437,8 +377,8 @@
                         ],
                         "source_dest_check": true,
                         "state": {
-                            "code": 0,
-                            "name": "pending"
+                            "code": 16,
+                            "name": "running"
                         },
                         "state_transition_reason": "",
                         "subnet_id": "subnet-0350decbd8e2ad52b",
@@ -521,71 +461,8 @@
                         "wait_timeout": 600
                     }
                 },
-                "item": "catalogue",
-                "spec": {
-                    "BlockDeviceMappings": [],
-                    "ClientToken": "44290aea607e47ac934f06c46df227ea",
-                    "ImageId": "ami-0220d79f3f480ecf5",
-                    "InstanceType": "t3.micro",
-                    "MaxCount": 1,
-                    "MinCount": 1,
-                    "NetworkInterfaces": [
-                        {
-                            "DeviceIndex": 0,
-                            "Groups": [
-                                "sg-04912852a99136d2b"
-                            ],
-                            "SubnetId": "subnet-0350decbd8e2ad52b"
-                        }
-                    ],
-                    "TagSpecifications": [
-                        {
-                            "ResourceType": "volume",
-                            "Tags": [
-                                {
-                                    "Key": "Project",
-                                    "Value": "roboshop"
-                                },
-                                {
-                                    "Key": "Component",
-                                    "Value": "catalogue"
-                                },
-                                {
-                                    "Key": "Environment",
-                                    "Value": "dev"
-                                },
-                                {
-                                    "Key": "Name",
-                                    "Value": "catalogue-dev"
-                                }
-                            ]
-                        },
-                        {
-                            "ResourceType": "instance",
-                            "Tags": [
-                                {
-                                    "Key": "Project",
-                                    "Value": "roboshop"
-                                },
-                                {
-                                    "Key": "Component",
-                                    "Value": "catalogue"
-                                },
-                                {
-                                    "Key": "Environment",
-                                    "Value": "dev"
-                                },
-                                {
-                                    "Key": "Name",
-                                    "Value": "catalogue-dev"
-                                }
-                            ]
-                        }
-                    ]
-                }
+                "item": "catalogue"
             }
         ],
         "skipped": false
- }
-
-
+}
