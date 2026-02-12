@@ -1,61 +1,68 @@
-- name: configure catalogue
+- name: Configure catalogue
   hosts: catalogue
   become: yes
+
   tasks:
-  - name: enable nodejs 20
-    ansible.builtin.command: dnf module enable nodejs:20 -y
 
-  - name: install nodejs
-    ansible.builtin.dnf:
-      name: nodejs
-      state: present
+    - name: Enable NodeJS 20
+      ansible.builtin.command: dnf module enable nodejs:20 -y
 
-  - name: create system user roboshop
-    ansible.builtin.user:
-      name: roboshop
-      system: true
-      home: /app
-      shell: /sbin/nologin
-      comment: "Roboshop system user"
+    - name: Install NodeJS
+      ansible.builtin.dnf:
+        name: nodejs
+        state: present
 
-  - name: create app directory
-    ansible.builtin.file:
-      path: /app
-      state: directory
+    - name: Create system user roboshop
+      ansible.builtin.user:
+        name: roboshop
+        system: true
+        home: /app
+        shell: /sbin/nologin
+        comment: "Roboshop system user"
 
-  - name: download catalogue
-    ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-      dest: /tmp/catalogue.zip
+    - name: Create app directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+        owner: roboshop
+        group: roboshop
 
-  - name: unarchieve catalogue
-    ansible.builtin.unarchive:
-      src: /tmp/catalogue.zip
-      dest: /app
-      remote_src: yes
+    - name: Download catalogue
+      ansible.builtin.get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+        dest: /tmp/catalogue.zip
 
-  - name: install dependencies 
-    community.genral.npm:
-      path: /app
+    - name: Unarchive catalogue
+      ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
+        remote_src: yes
 
-  - name: copy catalogue service 
-    ansible.builtin.copy:
-       src: catalogue.service
-       dest: /etc/systemd/system/catalogue.service
+    - name: Install NodeJS dependencies
+      community.general.npm:
+        path: /app
 
-  - name: copy mongo repo 
-    src: mongo.repo
-    dest: /etc/yu.repos.d/mango.repo
+    - name: Copy catalogue service file
+      ansible.builtin.copy:
+        src: catalogue.service
+        dest: /etc/systemd/system/catalogue.service
 
-  - name: install mongodd client
-    ansible.builtin.dnf:
-    name: mongod-monogosh
-    state: present
+    - name: Copy mongo repo file
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
 
-  - name: check products laoded 
-    ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
-    register: catalogue_output
+    - name: Install MongoDB client
+      ansible.builtin.dnf:
+        name: mongodb-mongosh
+        state: present
 
-  - name: print the output 
-    ansible.builtin.debug:
-      msg: "{{catalogue_output}}"
+    - name: Check if catalogue database exists
+      ansible.builtin.command: >
+        mongosh --host {{ MONGODB_HOST }} --quiet
+        --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+      register: catalogue_output
+
+    - name: Print the output
+      ansible.builtin.debug:
+        msg: "{{ catalogue_output.stdout }}"
